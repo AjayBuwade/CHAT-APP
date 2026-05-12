@@ -67,3 +67,62 @@ export const getMessages = async (req, res) => {
 		res.status(500).json({ error: "Internal server error" });
 	}
 };
+
+export const deleteMessage = async (req, res) => {
+    try {
+        const { id: messageId } = req.params;
+        const senderId = req.user._id;
+
+        const message = await Message.findById(messageId);
+
+        if (!message) {
+            return res.status(404).json({ error: "Message not found" });
+        }
+
+        // Check karna ki kya delete karne wala wahi hai jisne message bheja tha
+        if (message.senderId.toString() !== senderId.toString()) {
+            return res.status(403).json({ error: "You can only delete your own messages" });
+        }
+
+        // Database se message delete karein
+        await Message.findByIdAndDelete(messageId);
+
+        // Conversation array se bhi message ki ID hata dein
+        await Conversation.updateOne(
+            { messages: messageId },
+            { $pull: { messages: messageId } }
+        );
+
+        res.status(200).json({ message: "Message deleted successfully" });
+    } catch (error) {
+        console.log("Error in deleteMessage controller: ", error.message);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+export const deleteFullChat = async (req, res) => {
+    try {
+        const { id: userToChatId } = req.params;
+        const senderId = req.user._id;
+
+        // 1. Conversation dhoondhein
+        const conversation = await Conversation.findOne({
+            participants: { $all: [senderId, userToChatId] },
+        });
+
+        if (!conversation) {
+            return res.status(404).json({ error: "Chat not found" });
+        }
+
+        // 2. Us conversation ke saare messages 'Message' collection se uda dein
+        await Message.deleteMany({ _id: { $in: conversation.messages } });
+
+        // 3. 'Conversation' document ko delete karein
+        await Conversation.findByIdAndDelete(conversation._id);
+
+        res.status(200).json({ message: "Full chat deleted successfully" });
+    } catch (error) {
+        console.log("Error in deleteFullChat controller: ", error.message);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};

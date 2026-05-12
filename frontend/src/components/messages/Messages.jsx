@@ -1,33 +1,27 @@
-import { useState } from "react";
-import { BsSend } from "react-icons/bs";
-import useSendMessage from "../../hooks/useSendMessage";
+import Message from "./Message";
+import useGetMessages from "../../hooks/useGetMessages";
+import useListenMessages from "../../hooks/useListenMessages"; //  NAYI LINE: Hook ko import kiya
 
-const MessageInput = () => {
-	const [message, setMessage] = useState("");
-	const { loading, sendMessage } = useSendMessage();
+const Messages = () => {
+    const { messages, loading } = useGetMessages();
+    useListenMessages(); // 
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		if (!message) return;
-		await sendMessage(message);
-		setMessage("");
-	};
+    return (
+        <div className='px-4 flex-1 overflow-auto'>
+            {!loading && messages?.length > 0 && messages.map((message) => (
+                <Message key={message._id} message={message} />
+            ))}
 
-	return (
-		<form className='px-4 my-3' onSubmit={handleSubmit}>
-			<div className='w-full relative'>
-				<input
-					type='text'
-					className='border text-sm rounded-lg block w-full p-2.5  bg-gray-700 border-gray-600 text-white'
-					placeholder='Send a message'
-					value={message}
-					onChange={(e) => setMessage(e.target.value)}
-				/>
-				<button type='submit' className='absolute inset-y-0 end-0 flex items-center pe-3'>
-					{loading ? <div className='loading loading-spinner'></div> : <BsSend />}
-				</button>
-			</div>
-		</form>
-	);
+            {!loading && messages?.length === 0 && (
+                <p className='text-center text-gray-300'>Send a message to start the conversation</p>
+            )}
+            
+            {loading && (
+                <div className="flex justify-center items-center h-full">
+                    <span className="loading loading-spinner text-info"></span>
+                </div>
+            )}
+        </div>
+    );
 };
-export default MessageInput;
+export default Messages;
