@@ -9,14 +9,12 @@ const useSendMessage = () => {
     const sendMessage = async (message) => {
         setLoading(true);
         try {
-            // Corrected line with proper backticks
-            const res = await fetch(`https://chat-app-heao.onrender.com/api/messages/send/${selectedConversation._id}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ message }),
-            });
+const res = await fetch(`https://chat-app-heao.onrender.com/api/messages/send/${selectedConversation._id}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include", // <-- BOHOT ZAROORI
+    body: JSON.stringify({ message }),
+});
             const data = await res.json();
             if (data.error) throw new Error(data.error);
 
