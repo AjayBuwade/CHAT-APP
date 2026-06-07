@@ -14,6 +14,7 @@ const useLogin = () => {
 			const res = await fetch("https://chat-app-heao.onrender.com/api/user/login", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
+				credentials: "include",
 				body: JSON.stringify({ username, password }),
 			});
 
