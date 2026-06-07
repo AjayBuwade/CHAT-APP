@@ -15,12 +15,11 @@ export const SocketContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (authUser) {
-            // FIX: 'https' ko badal kar 'http' kar diya
-            const socket = io("https://chat-app-heao.onrender.com", {
-                query: {
-                    userId: authUser._id,
-                },
-            });
+const socket = io("https://chat-app-heao.onrender.com", {
+            query: {
+                userId: authUser._id,
+            },
+        });
 
             setSocket(socket);
 

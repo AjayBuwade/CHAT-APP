@@ -6,10 +6,10 @@ const app = express();
 
 const server = http.createServer(app);
 const io = new Server(server, {
-	cors: {
-		origin: ["https://chat-app-heao.onrender.com"],
-		methods: ["GET", "POST"],
-	},
+    cors: {
+        origin: ["https://chat-app-ebou.vercel.app"], 
+        methods: ["GET", "POST"],
+    },
 });
 
 export const getReceiverSocketId = (receiverId) => {
