@@ -9,7 +9,10 @@ const useGetConversations = () => {
 		const getConversations = async () => {
 			setLoading(true);
 			try {
-const res = await fetch("[https://chat-app-heao.onrender.com/api/users](https://chat-app-heao.onrender.com/api/users)");
+const res = await fetch("https://chat-app-heao.onrender.com/api/users", {
+    method: "GET", // Data laane ke liye GET request
+    credentials: "include" // Token check karwane ke liye zaroori hai
+});
 				const data = await res.json();
 				if (data.error) {
 					throw new Error(data.error);

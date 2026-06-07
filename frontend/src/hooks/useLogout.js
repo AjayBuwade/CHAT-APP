@@ -9,10 +9,11 @@ const useLogout = () => {
 	const logout = async () => {
 		setLoading(true);
 		try {
-			const res = await fetch("[https://chat-app-heao.onrender.com/api/auth/logout](https://chat-app-heao.onrender.com/api/auth/logout)", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-			});
+		const res = await fetch("https://chat-app-heao.onrender.com/api/auth/logout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include" // Yeh zaroori hai cookie hatane ke liye
+});
 			const data = await res.json();
 			if (data.error) {
 				throw new Error(data.error);
