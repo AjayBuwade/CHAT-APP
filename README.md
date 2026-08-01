@@ -7,7 +7,7 @@
 A full-stack, real-time messaging application built with the MERN stack. It features instant bi-directional communication, media handling for user profiles, and granular message control, designed to handle concurrent multi-user sessions efficiently.
 
 ##  Live Demo
-[Insert Vercel Live Link Here]
+https://chat-app-ebou.vercel.app/
 
 ##  Key Features
 - **Real-Time Messaging:** Instant, bi-directional communication across concurrent sessions using Socket.IO, ensuring live state synchronization.
@@ -36,8 +36,8 @@ A full-stack, real-time messaging application built with the MERN stack. It feat
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/AjayBuwade/CHAT-APP.git
+   cd CHAT-APP
    ```
 
 2. **Setup Environment Variables:**
@@ -73,4 +73,4 @@ A full-stack, real-time messaging application built with the MERN stack. It feat
 
 ## 📈 Performance Highlights
 - Streamlined media handling architecture eliminated payload bottlenecks during concurrent sessions.
-- Socket.IO integration guarantees zero-refresh instant message delivery
+- Socket.IO integration guarantees zero-refresh instant message delivery.
